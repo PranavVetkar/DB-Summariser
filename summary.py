@@ -6,19 +6,15 @@ def summarize_market_data(db_name="crypto_trading.db"):
 
     print("\n--- Market Database Summary ---")
 
-    # 1. Fetch the last 5 entries
     cursor.execute('SELECT * FROM price_history ORDER BY id DESC LIMIT 5')
     recent_rows = cursor.fetchall()
     print("Recent Ticks:")
     for row in recent_rows:
         print(f"ID: {row[0]} | Time: {row[1]} | Price: ${row[3]:,.2f}")
 
-    # 2. Calculate the average price using SQL math
-    # This is much faster than calculating it in Python!
     cursor.execute('SELECT AVG(price) FROM price_history')
     avg_price = cursor.fetchone()[0]
     
-    # 3. Count total records
     cursor.execute('SELECT COUNT(*) FROM price_history')
     total_records = cursor.fetchone()[0]
 
